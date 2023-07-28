@@ -1,19 +1,21 @@
 import "./generator.css"
+import { useState } from "react"
+
+// COMPONENTS:
+import { Slider } from "../slider/Slider"
+import PasswordDisplay from "../passwordDisplay/PasswordDisplay"
+
 export default function Generator(){
-    
+    const [sliderValue, setSliderValue] = useState(0)
+    const handleSliderChange = newValue => {
+        setSliderValue(newValue)
+    }
     
     return(
         <div className="modal">
-            <div><h1>PASSWORD DISPLAY</h1></div>
-            
             <div className="clickables">
-            <div className="slider-container">
-                <label for="password length">
-                    Password Length
-                </label>
-                <input type="range" min="2" max="50"></input>
-                
-            </div>
+                <PasswordDisplay value={sliderValue}/>
+                <Slider value={sliderValue} onChange={handleSliderChange}/>
                 <div className="checkbox-group">
                     <div><label><input type="checkbox"></input>numbers</label></div>
                     <div><label><input type="checkbox"></input>!@#$</label></div>
