@@ -1,4 +1,7 @@
-export default function PasswordDisplay({ value }) {
+import "./display.css";
+
+export default function PasswordDisplay(props) {
+  const { value, numbersChecked, specialsChecked, capitalsChecked } = props;
   const generatePass = (length) => {
     const lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
     let password = "";
@@ -9,10 +12,10 @@ export default function PasswordDisplay({ value }) {
     return password;
   };
 
-  const display = generatePass(value); // Step 1: Call the generatePass function
+  const display = generatePass(value);
 
   return (
-    <div>
+    <div className="password-display">
       <h1>{display}</h1>
     </div>
   );
