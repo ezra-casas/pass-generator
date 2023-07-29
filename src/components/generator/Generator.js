@@ -1,47 +1,74 @@
-import "./generator.css"
-import { useState } from "react"
+import "./generator.css";
+import { useState } from "react";
 
 // COMPONENTS:
-import { Slider } from "../slider/Slider"
-import PasswordDisplay from "../passwordDisplay/PasswordDisplay"
+import { Slider } from "../slider/Slider";
+import PasswordDisplay from "../passwordDisplay/PasswordDisplay";
 
-export default function Generator(){
-    const [sliderValue, setSliderValue] = useState(0)
-    let numbersChecked = false
-    let specialsChecked = false
-    let capitalsChecked = false
-    let lowerIsChecked = false
+export default function Generator() {
+  const [sliderValue, setSliderValue] = useState(8);
+  const [selectables, setSelectables] = useState(["lowers"]);
 
-    const handleSliderChange = newValue => {
-        setSliderValue(newValue)
+  const handleSliderChange = (newValue) => {
+    setSliderValue(newValue);
+  };
+
+  const checkboxOptions = [
+    { name: "numbers", label: "numbers" },
+    { name: "specials", label: "!@#$" },
+    { name: "capitals", label: "capitals" },
+    { name: "lowers", label: "no lower" },
+  ];
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    if (checked) {
+      // This adds the name to selectables
+      // This makes it easier to handle groups of data
+      // instead of adding everything in _ group
+      setSelectables((prevSelectables) => [...prevSelectables, name]);
+    } else {
+      // As previously mentioned
+      // this allows us to easily remove the group name
+      // from the selectables
+      setSelectables((prevSelectables) =>
+        prevSelectables.filter((item) => item !== name)
+      );
     }
-    
-    return(
-        <div className="modal">
-            <div className="clickables">
+  };
+  return (
+    <div className="modal">
+      <div className="clickables">
+        <PasswordDisplay value={sliderValue} selectables={selectables} />
 
-                <PasswordDisplay 
-                    value={sliderValue} 
-                    numbersChecked={numbersChecked} 
-                    specialsChecked={specialsChecked} 
-                    capitalsChecked={capitalsChecked}
-                    lowerIsChecked={lowerIsChecked}
+        <Slider value={sliderValue} onChange={handleSliderChange} />
+
+        <div className="checkbox-group">
+          {checkboxOptions.map((option) => (
+            <div key={option.name}>
+              <label>
+                <input
+                  type="checkbox"
+                  name={option.name}
+                  checked={selectables.includes(option.name)}
+                  onChange={handleCheckboxChange}
+                  // DISABLED IF ONLY ONE ELEMENT IN SELECTABLES
+                  disabled={
+                    selectables.includes(option.name) &&
+                    selectables.length === 1
+                  }
                 />
-                
-                <Slider value={sliderValue} onChange={handleSliderChange}/>
-                
-                <div className="checkbox-group">
-                    <div><label><input type="checkbox"></input>numbers</label></div>
-                    <div><label><input type="checkbox"></input>!@#$</label></div>
-                    <div><label><input type="checkbox"></input>capitals</label></div>
-                    <div><label><input type="checkbox"></input>no lower</label></div>
-                </div>
-
-                <div className="btn-group">
-                    <button>Copy</button>
-                    <button>Generate</button>
-                </div>
+                {option.label}
+              </label>
             </div>
+          ))}
         </div>
-    )
+
+        <div className="btn-group">
+          <button>Copy</button>
+          <button>Generate</button>
+        </div>
+      </div>
+    </div>
+  );
 }

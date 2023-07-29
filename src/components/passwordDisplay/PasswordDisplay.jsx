@@ -1,13 +1,43 @@
 import "./display.css";
 
 export default function PasswordDisplay(props) {
-  const { value, numbersChecked, specialsChecked, capitalsChecked } = props;
+  const { value, selectables } = props;
+
   const generatePass = (length) => {
-    const lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
     let password = "";
+
+    const options = {
+      numbers: "1234567890",
+      specials: "!?@#$%.-_&*",
+      capitals: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      lowers: "abcdefghjiklmnopqrstuvwxyz",
+    };
+
+    // randomly select from SELECTABLES
+    // then access options bases on the SELECTABLE
+    // finally randomaly select an element
+
     for (let i = 0; i < length; i++) {
-      const randIndex = Math.floor(Math.random() * lowerAlphabet.length);
-      password += lowerAlphabet[randIndex];
+      // We check if there's more than one to be more efficient
+      // on not having to run math to randomly select a 1 element
+      // in an array.
+      if (selectables.length === 1) {
+        const selectedOptions = options[selectables[0]];
+        const randomCharacter = Math.floor(
+          Math.random() * selectedOptions.length
+        );
+        password += selectedOptions[randomCharacter];
+      } else {
+        // randomize selectables array selection:
+        const randomOptions =
+          selectables[Math.floor(Math.random() * selectables.length)];
+        const selectedOptions = options[randomOptions];
+        const randomCharacter = Math.floor(
+          Math.random() * selectedOptions.length
+        );
+
+        password += selectedOptions[randomCharacter];
+      }
     }
     return password;
   };

@@ -11,8 +11,8 @@ export function Slider({ value, onChange }) {
         value={value}
         onChange={handleChange}
         type="range"
-        min="2"
-        max="50"
+        min="6"
+        max="100"
       />
       {value}
     </div>
