@@ -1,6 +1,7 @@
 import "./generator.css";
 import { useState } from "react";
 
+
 // COMPONENTS:
 import { Slider } from "../slider/Slider";
 import PasswordDisplay from "../passwordDisplay/PasswordDisplay";
@@ -36,11 +37,16 @@ export default function Generator() {
       );
     }
   };
+  
+  const handleClick = () => {
+
+  }
   return (
     <div className="modal">
-      <div className="clickables">
-        <PasswordDisplay value={sliderValue} selectables={selectables} />
+      
+      <PasswordDisplay value={sliderValue} selectables={selectables} />
 
+      <div className="clickables">
         <Slider value={sliderValue} onChange={handleSliderChange} />
 
         <div className="checkbox-group">
@@ -65,8 +71,8 @@ export default function Generator() {
         </div>
 
         <div className="btn-group">
-          <button>Copy</button>
-          <button>Generate</button>
+          <button >Copy</button>
+          <button onClick={handleClick}>Generate</button>
         </div>
       </div>
     </div>

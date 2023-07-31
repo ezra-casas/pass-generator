@@ -1,4 +1,6 @@
 .password-display{
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
+    width: 50%
 }

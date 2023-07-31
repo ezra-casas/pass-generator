@@ -1,13 +1,15 @@
 .modal{
     background-color: rgb(178, 178, 178);
-    height: 30vh;
+    height: auto;
     width: 50%;
     border-radius: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     color: #282c34;
-    padding: 16px;
+    padding: 1rem;
+    
 }
 
 .clickables{
